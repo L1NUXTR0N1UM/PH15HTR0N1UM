@@ -6,7 +6,7 @@
 * `cd L1NUXTR0N1UM`
 * `bash PH15HTR0N1UM`
 
-  ## Installation (Termux) :
+## Installation (Termux) :
 
 * `apt update`
 * `apt install git curl php openssh -y`
