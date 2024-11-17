@@ -267,7 +267,7 @@ fi
 sleep 0.75
 done 
 }
-
+loading
 banner
 dependencies
 menu
